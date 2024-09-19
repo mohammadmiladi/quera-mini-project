@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axiosClient from '../../api/axiosClient'
-import { AuthState } from './authTypes'
+import { loginAPI } from './authAPI'
+import { AuthState, LoginPayload } from './authTypes'
 
 const initialState: AuthState = {
     user: null,
@@ -11,9 +11,9 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
     'auth/login',
-    async () => {
+    async (loginPayload: LoginPayload) => {
         try {
-            const response = axiosClient.get('/posts')
+            const response = await loginAPI(loginPayload)
             return response
         } catch (error) {
             
