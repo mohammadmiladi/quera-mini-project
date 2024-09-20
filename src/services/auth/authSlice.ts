@@ -6,7 +6,7 @@ const initialState: AuthState = {
     user: null,
     token: undefined,
     loading: false,
-    error: null
+    error: null,
 }
 
 export const login = createAsyncThunk(

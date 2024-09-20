@@ -14,6 +14,7 @@ export const theme = {
     'crypto-black': '#0B0B0F',
     'crypto-gradient-1': '#18C8FF',
     'crypto-gradient-2': '#933FFE',
+    'crypto-bg-card': '#1A1B23',
   },
   extend: {},
 };
