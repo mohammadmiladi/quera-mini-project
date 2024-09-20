@@ -2,6 +2,10 @@ export interface LoginPayload {
     email: string;
     password: string;
 }
+export interface RegisterPayload {
+    email: string;
+    password: string;
+}
 
 export interface AuthResponse {
     user: {
@@ -19,7 +23,7 @@ export interface AuthState {
         name: string;
         email: string;
     } | null;
-    token: string | null;
+    token: string | undefined;
     error: string | null;
     loading: boolean;
 }
