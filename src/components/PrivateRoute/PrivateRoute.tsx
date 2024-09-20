@@ -1,13 +1,15 @@
 import { Navigate } from "react-router-dom";
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 interface PrivateRouteProps {
     element: JSX.Element;
-    isAuthentication: boolean;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ element, isAuthentication }) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
+    const { token } = useAppSelector((state) => state.auth);
+
     return (
-        isAuthentication ? element : <Navigate to="/login" />
+        token ? element : <Navigate to="/login" />
     )
 }
 

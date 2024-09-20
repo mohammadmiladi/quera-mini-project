@@ -11,7 +11,9 @@ export const content = [
 export const theme = {
   colors: {
     ...colors,
-    'crypto-black': '#0B0B0F'
+    'crypto-black': '#0B0B0F',
+    'crypto-gradient-1': '#18C8FF',
+    'crypto-gradient-2': '#933FFE',
   },
   extend: {},
 };

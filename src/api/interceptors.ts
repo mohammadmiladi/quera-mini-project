@@ -26,6 +26,10 @@ const applyInterceptors = (axiosClient: AxiosInstance) => {
                 console.log("مجاز نیستید");
             }
 
+            if (error.response?.status === 400) {
+                return
+            }
+
             // add 400, 500, 403 status codes
 
             return Promise.reject(error)

@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input'
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useNavigate } from 'react-router-dom'
+import { login } from '../../services/auth/authSlice'
 
 interface loginFormState {
     email: string;
@@ -10,6 +14,9 @@ interface loginFormState {
 const Login: React.FC = () => {
     const [form, setForm] = useState<loginFormState>({ password: '', email: '' })
     const [nameError, setNameError] = useState("");
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const { loading, error } = useAppSelector((state) => state.auth);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -17,8 +24,12 @@ const Login: React.FC = () => {
         setForm({ ...form, [name]: value })
     }
 
-    const submitForm = () => {
+    const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        dispatch(login(form)).then(() => {
+            navigate('/');
+        })
     }
     return (
         <div className=' flex items-center justify-center min-h-screen bg-blue-950'>
@@ -53,11 +64,12 @@ const Login: React.FC = () => {
                     <div>
                         <Button
                             buttonStyle="rounded bg-blue-500 py-1 px-7 text-white"
-                            title="Login"
+                            title={loading ? 'loading ...' : 'Login'}
                             type="submit"
                         />
                     </div>
                 </form>
+                <p>{error ? error : ""}</p>
             </div>
         </div>
     )

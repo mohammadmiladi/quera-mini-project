@@ -1,17 +1,24 @@
 import { useState } from 'react';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input'
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useNavigate } from 'react-router-dom'
+import { login, register } from '../../services/auth/authSlice'
 
 interface registerFormState {
-    name: string;
+    name?: string;
     email: string;
     password: string;
-    confirmPassword: string
+    confirmPassword?: string
 }
 
 const Register: React.FC = () => {
     const [form, setForm] = useState<registerFormState>({ name: '', password: '', email: '', confirmPassword: '' })
     const [nameError, setNameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -19,8 +26,16 @@ const Register: React.FC = () => {
         setForm({ ...form, [name]: value })
     }
 
-    const submitForm = () => {
+    const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        if (!form.email.length) {
+            setEmailError("ایمیل اجباری است")
+        }
+
+        dispatch(register(form)).then(() => {
+            navigate('/');
+        })
     }
 
     return (
@@ -36,7 +51,7 @@ const Register: React.FC = () => {
                             name="email"
                             value={form.email}
                             onChange={handleChange}
-                            inputStyle={`bg-gray-100 placeholder:text-sm rounded p-1 mb-2 border-solid border ${nameError ? "border-red-400" : "border-gray-400"
+                            inputStyle={`bg-gray-100 placeholder:text-sm rounded p-1 mb-2 border-solid border ${emailError ? "border-red-400" : "border-gray-400"
                                 }`}
                         />
                     </div>
